@@ -1,0 +1,10 @@
+samtools sort AddLps.bam AddLps.sorted
+bedtools genomecov -strand + -bg -split -ibam AddLps.sorted.bam > AddLps.sorted.pos.bdg
+cat AddLps.sorted.pos.bdg |sort -k1,1 -k2,2n > AddLps.sorted.sort.pos.bdg
+bedGraphToBigWig AddLps.sorted.sort.pos.bdg /data/pipelines/rna-seq/mm9.chrom.sizes AddLps.pos.bw
+cp AddLps.pos.bw /var/www/html/home/liuzhe/data/CLIP-seq_merge_replicate/
+
+bedtools genomecov -strand - -bg -split -ibam AddLps.sorted.bam > AddLps.sorted.neg.bdg
+cat AddLps.sorted.neg.bdg |sort -k1,1 -k2,2n > AddLps.sorted.sort.neg.bdg
+bedGraphToBigWig AddLps.sorted.sort.neg.bdg /data/pipelines/rna-seq/mm9.chrom.sizes AddLps.neg.bw
+cp AddLps.neg.bw /var/www/html/home/liuzhe/data/CLIP-seq_merge_replicate/
